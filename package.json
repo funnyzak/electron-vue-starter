@@ -5,17 +5,15 @@
   "description": "electron-vue-quick-start",
   "author": "funnyzak <silenceace@gmail.com>",
   "scripts": {
-    "serve": "cross-env node ./config/build.js --mode=serve",
-    "build": "cross-env node ./config/build.js --mode=build",
-    "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint",
-    "build:module": "cross-env node ./config/build.js --mode=build module",
+    "serve": "cvue-cli-service serve",
+    "build": "vue-cli-service build",
     "electron:build": "vue-cli-service electron:build",
     "electron:serve": "vue-cli-service electron:serve",
+    "test:unit": "vue-cli-service test:unit",
+    "lint": "vue-cli-service lint",
     "eslint": "eslint --fix --cache .",
     "postinstall": "electron-builder install-app-deps",
-    "postuninstall": "electron-builder install-app-deps",
-    "serve:module": "cross-env node ./config/build.js --mode=serve module"
+    "postuninstall": "electron-builder install-app-deps"
   },
   "main": "background.js",
   "dependencies": {

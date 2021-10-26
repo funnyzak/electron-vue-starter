@@ -27,22 +27,15 @@ jobs:
         working-directory: ./
         run: |
           npm install
-          npm run build
-      - name: Deploy GitHubPage
-        uses: JamesIves/github-pages-deploy-action@4.1.5
+          npm run electron:build
+      - name: Build/release Electron app
+        uses: samuelmeuli/action-electron-builder@v1
         with:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          branch: gh-pages # The branch the action should deploy to.
-          folder: dist
-      - name: Archive Dist
-        uses: papeloto/action-zip@v1
-        with:
-          files: dist/
-          recursive: false
-          dest: ${{ env.DIST_ARCHIVE_NAME }}.zip
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
-        with:
-          files: |
-            ${{ env.DIST_ARCHIVE_NAME }}.zip
+          build_script_name: dist
+          # GitHub token, automatically provided to the action
+          # (No need to define this secret in the repo settings)
+          github_token: ${{ secrets.github_token }}
+
+          # If the commit is tagged with a version (e.g. "v1.0.0"),
+          # release the app after building
+          release: ${{ startsWith(github.ref, 'refs/tags/v') }}

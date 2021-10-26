@@ -28,9 +28,9 @@ export default class Home extends Vue {
   currentStatus: string = store.getters.status;
 
   apiDemo() {
-    api.get('').then((res: AxiosResponse<any, any>) => {
-      this.apiResponseString = JSON.stringify(res);
-    });
+    // api.get('').then((res: AxiosResponse<any, any>) => {
+    //   this.apiResponseString = JSON.stringify(res);
+    // });
   }
 
   mounted() {

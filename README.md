@@ -36,16 +36,17 @@
 
 执行：`npm install`，然后：
 
-- 默认启动（所有）：`npm run serve`
-- 全部构建（所有）：`npm run build`
-- 仅启动**second**页：`npm run serve:module second`
-- 仅构建**second**页：`npm run build:module second`
+- 启动 Electron 服务：`npm run electron:serve`
+- 构建 App：`npm run electron:build`
+- 单启动 renderer 服务：`npm run serve`
+- 单构建 renderer：`npm run build`
 - Lint 格式化/检查：`npm run eslint`
 - 运行 jest 测试`npm run test:unit`
 
-## 打包
+## 输出
 
-- 源构建输出：`./dist`
+- renderer 构建输出：`./dist`
+- app 打包输出: `./build_electron`
 
 ## 参考
 

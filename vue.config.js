@@ -87,6 +87,57 @@ module.exports = {
       }
     }
   },
+  pluginOptions: {
+    electronBuilder: {
+      builderOptions: {
+        "appId": "github.funnyzak.electron",
+        "productName": "electron app",
+        "copyright": "copyright © 2021 eric",
+        "directories": {
+          "output": "./dist_electron",
+        },
+        "asar": true,
+        "dmg": {
+          "contents": [{
+            "x": 410,
+            "y": 150,
+            "type": "link",
+            "path": "/Applications"
+          },
+          {
+            "x": 130,
+            "y": 150,
+            "type": "file"
+          }
+          ]
+        },
+        "nsis": {
+          "oneClick": false, // 是否一键安装
+          "allowElevation": true, // 允许请求提升。 如果为false，则用户必须使用提升的权限重新启动安装程序。
+          "allowToChangeInstallationDirectory": true, // 允许修改安装目录
+          "installerIcon": "./public/icon/128x128.ico", // 安装图标
+          "uninstallerIcon": "./public/icon/128x128.ico", //卸载图标
+          "installerHeaderIcon": "./public/icon/128x128.ico", // 安装时头部图标
+          "createDesktopShortcut": true, // 创建桌面图标
+          "createStartMenuShortcut": true, // 创建开始菜单图标
+          "shortcutName": "demo", // 图标名称
+        },
+        "win": { //win相关配置
+          "icon": "./public/icon/128x128.ico", //图标，当前图标在根目录下，注意这里有两个坑
+          "target": [{
+            "target": "nsis", //利用nsis制作安装程序
+            "arch": [
+              "x64", //64位
+              "ia32" //32位
+            ]
+          }]
+        },
+        "mac": {
+          "icon": './public/icon/128x128.icns'
+        }
+      }
+    }
+  },
   // webpack 配置
   configureWebpack: (config) => {
     // config.resolve.alias['@'] = 'src'
@@ -107,28 +158,6 @@ module.exports = {
       .rule('vue')
       .use('vue-loader')
       .tap((options) => options);
-
-    // https://webpack.docschina.org/plugins/split-chunks-plugin/#splitchunkscachegroups
-    // config.optimization.splitChunks({
-    //   chunks: 'all',
-    //   minSize: 1000,
-    //   minChunks: 1,
-    //   maxAsyncRequests: 30,
-    //   maxInitialRequests: 30,
-    //   cacheGroups: {
-    //     libs: {
-    //       name: 'chunk-libs',
-    //       test: /[\\/]node_modules[\\/]/,
-    //       priority: 30,
-    //       chunks: 'initial' // only package third parties that are initially dependent
-    //     },
-    //     page: {
-    //       name: 'page',
-    //       priority: 20,
-    //       chunks: 'initial'
-    //     },
-    //   }
-    // })
   },
   // css 配置
   css: {
