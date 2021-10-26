@@ -10,6 +10,6 @@ export const parseStaticUrl = (url: string): string => {
   return url.startsWith('/')
     ? staticBaseURL + url
     : url.startsWith('@')
-    ? staticBaseURL + url.substring(1)
-    : url;
+      ? staticBaseURL + url.substring(1)
+      : url;
 };

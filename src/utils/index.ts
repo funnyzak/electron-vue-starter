@@ -1,5 +1,5 @@
 export function rangeArray(size: number) {
-  let _array: Array<number> = [];
+  const _array: Array<number> = [];
   for (let i = 0; i < size; i++) {
     _array[i] = i;
   }
@@ -11,10 +11,10 @@ export const queryString = (params?: Record<string, string>): string => {
     return '';
   }
   return (
-    '?' +
-    Object.keys(params)
-      .map((k) => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
-      .join('&')
+    `?${
+      Object.keys(params)
+        .map((k) => `${encodeURIComponent(k)}=${encodeURIComponent(params[k])}`)
+        .join('&')}`
   );
 };
 
@@ -28,16 +28,15 @@ export const parse2Https = (url: string) => {
 };
 
 export const parseDate = function (date: string) {
-  var t = Date.parse(date);
+  const t = Date.parse(date);
   if (typeof t === 'number') {
     return new Date(Date.parse(date.replace(/-/g, '/')));
-  } else {
-    return new Date();
   }
+  return new Date();
 };
 
 export function parseWeekday(sDate: any) {
-  var dt = typeof sDate === 'string' ? new Date(sDate.replace(/-/g, '/')) : sDate;
-  var a = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+  const dt = typeof sDate === 'string' ? new Date(sDate.replace(/-/g, '/')) : sDate;
+  const a = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
   return a[dt.getDay()];
 }

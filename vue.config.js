@@ -12,8 +12,6 @@ const pageBaseConfig = {
   filename: 'index.html'
 };
 
-// https://www.npmjs.com/package/webpack-bundle-analyzer
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 // https://www.npmjs.com/package/git-revision-webpack-plugin
 const GitRevisionPlugin = require('git-revision-webpack-plugin');
 
@@ -106,7 +104,6 @@ module.exports = {
   // 设置生成的 HTML 中 <link rel="stylesheet"> 和 <script> 标签的 crossorigin 属性。
   // crossorigin: 'anonymous',
   devServer: {
-    open: process.env.NODE_ENV === 'development',
     host: '0.0.0.0',
     port: '2085',
     overlay: {
@@ -136,7 +133,6 @@ module.exports = {
     if (process.env.NODE_ENV === 'production') {
       // 为生产环境修改配置...
     } else {
-      config.plugins.push(new BundleAnalyzerPlugin());
       config.plugins.push(gitRevisionPlugin);
     }
   },

@@ -1,32 +1,23 @@
 {
   "name": "vue-quick-start",
-  "description": "vue-quick-start",
   "version": "1.0.0",
   "private": true,
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/funnyzak/vue-quick-start.git"
-  },
-  "keywords": [
-    "vue",
-    "typescript",
-    "webpack"
-  ],
+  "description": "vue-quick-start",
   "author": "funnyzak <silenceace@gmail.com>",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/funnyzak/vue-quick-start/issues"
-  },
-  "homepage": "https://github.com/funnyzak/vue-quick-start#readme",
   "scripts": {
     "serve": "cross-env node ./config/build.js --mode=serve",
     "build": "cross-env node ./config/build.js --mode=build",
-    "serve:module": "cross-env node ./config/build.js --mode=serve module",
-    "build:module": "cross-env node ./config/build.js --mode=build module",
     "test:unit": "vue-cli-service test:unit",
+    "lint": "vue-cli-service lint",
+    "build:module": "cross-env node ./config/build.js --mode=build module",
+    "electron:build": "vue-cli-service electron:build",
+    "electron:serve": "vue-cli-service electron:serve",
     "eslint": "eslint --fix --cache .",
-    "lint": "vue-cli-service lint"
+    "postinstall": "electron-builder install-app-deps",
+    "postuninstall": "electron-builder install-app-deps",
+    "serve:module": "cross-env node ./config/build.js --mode=serve module"
   },
+  "main": "background.js",
   "dependencies": {
     "axios": "^0.23.0",
     "core-js": "^3.6.5",
@@ -37,6 +28,7 @@
     "vuex": "^4.0.0-0"
   },
   "devDependencies": {
+    "@types/electron-devtools-installer": "^2.2.0",
     "@types/jest": "^24.0.19",
     "@typescript-eslint/eslint-plugin": "^4.18.0",
     "@typescript-eslint/parser": "^4.18.0",
@@ -52,6 +44,8 @@
     "@vue/eslint-config-typescript": "^7.0.0",
     "@vue/test-utils": "^2.0.0-0",
     "cross-env": "^7.0.3",
+    "electron": "^13.0.0",
+    "electron-devtools-installer": "^3.1.0",
     "eslint": "^6.8.0",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-vue": "^7.20.0",
@@ -61,13 +55,25 @@
     "runjs": "^4.4.2",
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2",
+    "spectron": "15.0.0",
     "typescript": "~4.1.5",
+    "vue-cli-plugin-electron-builder": "~2.1.1",
     "vue-jest": "^5.0.0-0",
     "webpack-bundle-analyzer": "^4.5.0"
+  },
+  "bugs": {
+    "url": "https://github.com/funnyzak/vue-quick-start/issues"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
   },
+  "homepage": "https://github.com/funnyzak/vue-quick-start#readme",
+  "keywords": [
+    "vue",
+    "typescript",
+    "webpack"
+  ],
+  "license": "ISC",
   "lint-staged": {
     "*.{js,jsx,vue,ts,tsx}": [
       "prettier --write",
@@ -78,5 +84,9 @@
       "prettier --write",
       "git add"
     ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/funnyzak/vue-quick-start.git"
   }
 }

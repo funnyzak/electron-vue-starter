@@ -1,5 +1,3 @@
-import { queryString } from '@/utils';
-
 import axios, {
   AxiosRequestConfig,
   AxiosResponse,
@@ -7,13 +5,16 @@ import axios, {
   AxiosInstance,
   Method
 } from 'axios';
+import { queryString } from '@/utils';
 
 export type RequestBefore = (config: AxiosRequestConfig) => AxiosRequestConfig;
 export type ResponseHook = (response: AxiosResponse<unknown, any>) => any;
 
 export default class AxiosRequest {
   requestConfig: AxiosRequestConfig<any>;
+
   requestBefore?: RequestBefore;
+
   responseHook?: ResponseHook;
 
   constructor(
@@ -21,8 +22,7 @@ export default class AxiosRequest {
     requestBefore?: RequestBefore,
     responseHook?: ResponseHook
   ) {
-    this.requestConfig =
-      requestConfig && requestConfig !== null ? requestConfig : this.defaultConfig();
+    this.requestConfig = requestConfig && requestConfig !== null ? requestConfig : this.defaultConfig();
     this.requestBefore = requestBefore;
     this.responseHook = responseHook;
   }
@@ -44,52 +44,45 @@ export default class AxiosRequest {
 
     service.interceptors.request.use(
       (config: AxiosRequestConfig) => {
-        config =
-          this.requestBefore && this.requestBefore !== null ? this.requestBefore(config) : config;
+        config = this.requestBefore && this.requestBefore !== null ? this.requestBefore(config) : config;
 
-        let headers: AxiosRequestHeaders = config.headers ? config.headers : {};
+        const headers: AxiosRequestHeaders = config.headers ? config.headers : {};
         headers['X-Requested-With'] = 'XMLHttpRequest';
         config.headers = headers || {};
 
         return config;
       },
-      (error: any) => {
-        return Promise.reject('请求超时');
-      }
+      (error: any) => Promise.reject('请求超时')
     );
 
     service.interceptors.response.use(
-      (response: AxiosResponse<unknown, any>) => {
-        return new Promise<any>((resolve, reject) => {
-          if (response.status === 200) {
-            if (this.responseHook && this.responseHook !== null) {
-              resolve(this.responseHook(response));
-            } else {
-              resolve(response.data);
-            }
+      (response: AxiosResponse<unknown, any>) => new Promise<any>((resolve, reject) => {
+        if (response.status === 200) {
+          if (this.responseHook && this.responseHook !== null) {
+            resolve(this.responseHook(response));
           } else {
-            switch (response.status) {
-              case 401:
-                return reject(new Error('无此权限'));
-              case 403:
-                return reject(new Error('禁止访问'));
-              case 404:
-                return reject(new Error('接口不存在'));
-              case 500:
-                return reject(new Error('接口发送了异常'));
-              case 504:
-                return reject(new Error('代理接口服务不可用'));
-              case 502:
-                return reject(new Error('接口代理出错'));
-              default:
-                return reject(new Error('请求失败'));
-            }
+            resolve(response.data);
           }
-        });
-      },
-      (error: any) => {
-        return Promise.reject(error);
-      }
+        } else {
+          switch (response.status) {
+            case 401:
+              return reject(new Error('无此权限'));
+            case 403:
+              return reject(new Error('禁止访问'));
+            case 404:
+              return reject(new Error('接口不存在'));
+            case 500:
+              return reject(new Error('接口发送了异常'));
+            case 504:
+              return reject(new Error('代理接口服务不可用'));
+            case 502:
+              return reject(new Error('接口代理出错'));
+            default:
+              return reject(new Error('请求失败'));
+          }
+        }
+      }),
+      (error: any) => Promise.reject(error)
     );
     return service;
   }
@@ -102,8 +95,8 @@ export default class AxiosRequest {
     contentType?: string
   ) {
     return this.createInstance().request({
-      url: url,
-      method: method,
+      url,
+      method,
       params: queryString(params),
       headers: this.requestContentTypeHeader(contentType),
       data

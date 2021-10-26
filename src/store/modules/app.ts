@@ -2,7 +2,7 @@ import { Module } from 'vuex';
 
 interface IState {
   device: string;
-  status: string;
+  status?: string;
 }
 
 const module: Module<IState, {}> = {
