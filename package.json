@@ -7,8 +7,10 @@
   "scripts": {
     "serve": "cvue-cli-service serve",
     "build": "vue-cli-service build",
-    "electron:build": "vue-cli-service electron:build",
     "electron:serve": "vue-cli-service electron:serve",
+    "electron:build": "vue-cli-service electron:build",
+    "electron:build:windows": "vue-cli-service electron:build --win",
+    "electron:build:mac": "vue-cli-service electron:build --mac",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
     "eslint": "eslint --fix --cache .",

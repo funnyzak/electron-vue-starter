@@ -38,6 +38,8 @@
 
 - 启动 Electron 服务：`npm run electron:serve`
 - 构建 App：`npm run electron:build`
+- 构建 windows App：`npm run electron:build:windows`
+- 构建 mac App：`npm run electron:build:mac`
 - 单启动 renderer 服务：`npm run serve`
 - 单构建 renderer：`npm run build`
 - Lint 格式化/检查：`npm run eslint`
