@@ -41,52 +41,16 @@ const templateParameters = {
   gitInfo
 };
 
-// multi-page 模式, 获取所有page
-const getPages = () => {
-  // 同步读取pages下的文件
-  const files = fs.readdirSync(pageBaseConfig.root);
-  const pages = {};
-
-  for (let i = 0; i < files.length; i++) {
-    const pageInfo = { name: files[i] };
-    pageInfo.path = path.join(pageBaseConfig.root, pageInfo.name);
-
-    if (fs.lstatSync(pageInfo.path).isFile()) {
-      continue;
-    }
-
-    // 如果没有入口文件，则跳过
-    pageInfo.entry = path.join(pageInfo.path, pageBaseConfig.entry);
-    if (!fs.existsSync(pageInfo.entry)) {
-      continue;
-    }
-
-    // 如果对应page下有index模板，则使用该模板，否则使用默认
-    const templatePath = path.join(pageInfo.path, 'index.html');
-    const template = fs.existsSync(templatePath) ? templatePath : pageBaseConfig.template;
-
-    pages[pageInfo.name] = {
-      entry: pageInfo.entry,
-      template,
-      filename: pageInfo.name === 'index' ? 'index.html' : `${pageInfo.name}.html`,
-      title: pageInfo.name
-    };
-  }
-  return pages;
-};
-
-/**
- * 如果以单模块启动，则只构建单页面
- */
-let entryPages = getPages();
-if (processArgs.action === 'module' && processArgs.name && entryPages[processArgs.name]) {
-  const tmpPage = {};
-  tmpPage[processArgs.name] = entryPages[processArgs.name];
-  entryPages = tmpPage;
-}
-
 module.exports = {
-  pages: entryPages,
+  pages: {
+    index: {
+      entry: 'src/main.ts',
+      template: 'public/index.html',
+      filename: 'index.html',
+      title: '首页',
+      chunks: ['chunk-vendors', 'chunk-common', 'index']
+    },
+  },
   // 使用相对路径
   publicPath: '',
   // 将 lint 错误输出为编译警告

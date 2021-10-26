@@ -1,12 +1,11 @@
-# Vue Quick Start
+# Electron Vue Quick Start
 
 ## 说明
 
-Vue **3.0.0** 快速开始脚手架。
+基于 Vue **3.0.0** 的构建的 Electron **^13.0.0** 快速开始脚手架。
 
 支持包含：
 
-- multi-page 支持
 - babel 转换
 - typescript 支持
 - jest 支持
@@ -15,10 +14,6 @@ Vue **3.0.0** 快速开始脚手架。
 - sass 支持
 - png|svg|jpg|jpeg|gif 引入支持
 - git commit hooks, no 💩
-
-### 运行
-
-最新 Tags 自动打包：[点这里打开](https://funnyzak.github.io/vue-quick-start/)
 
 ## 环境
 
